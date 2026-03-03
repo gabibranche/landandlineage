@@ -1,0 +1,110 @@
+
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/donmccurdy/aframe-extras@v7.0.0/dist/aframe-extras.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.5/dist/mindar-image-aframe.prod.js"></script>
+  </head>
+  <body>
+    <a-scene mindar-image="imageTargetSrc: https://raw.githubusercontent.com/gabibranche/landandlineage/main/women.mind;" color-space="sRGB" renderer="colorManagement: true, physicallyCorrectLights" vr-mode-ui="enabled: false" device-orientation-permission-ui="enabled: false">
+      
+
+      <a-camera position="0 0 0" look-controls="enabled: false"></a-camera>
+
+       <!-- TARGET 0 -->
+  <a-entity id="target0" mindar-image-target="targetIndex: 0"></a-entity>
+
+  <!-- TARGET 1 -->
+  <a-entity id="target1" mindar-image-target="targetIndex: 1"></a-entity>
+
+  <!-- TARGET 2 -->
+  <a-entity id="target2" mindar-image-target="targetIndex: 2"></a-entity>
+
+   <!-- TARGET 3 -->
+  <a-entity id="target3" mindar-image-target="targetIndex: 3"></a-entity>
+
+   <!-- TARGET 4 -->
+  <a-entity id="target4" mindar-image-target="targetIndex: 4"></a-entity>
+
+   <!-- TARGET 5 -->
+  <a-entity id="target5" mindar-image-target="targetIndex: 5"></a-entity>
+
+</a-scene>
+
+<script>
+  // AUDIO FILES
+  const audio0 = new Audio("https://raw.githubusercontent.com/gabibranche/landandlineage/main/barbara.mp3");
+  const audio1 = new Audio("https://raw.githubusercontent.com/gabibranche/landandlineage/main/gabi.mp3");
+  const audio2 = new Audio("https://raw.githubusercontent.com/gabibranche/landandlineage/main/julia.mp3");
+  const audio3 = new Audio("https://raw.githubusercontent.com/gabibranche/landandlineage/main/lisa.mp3");
+  const audio4 = new Audio("https://raw.githubusercontent.com/gabibranche/landandlineage/main/mary.mp3");
+  const audio5 = new Audio("https://raw.githubusercontent.com/gabibranche/landandlineage/main/ursula.mp3");
+
+  const target0 = document.querySelector("#target0");
+  const target1 = document.querySelector("#target1");
+  const target2 = document.querySelector("#target2");
+  const target3 = document.querySelector("#target3");
+  const target4 = document.querySelector("#target4");
+  const target5 = document.querySelector("#target5");
+  
+
+  // TARGET 0
+  target0.addEventListener("targetFound", () => {
+    audio0.play();
+  });
+  target0.addEventListener("targetLost", () => {
+    audio0.pause();
+    audio0.currentTime = 0;
+  });
+
+  // TARGET 1
+  target1.addEventListener("targetFound", () => {
+    audio1.play();
+  });
+  target1.addEventListener("targetLost", () => {
+    audio1.pause();
+    audio1.currentTime = 0;
+  });
+
+  // TARGET 2
+  target2.addEventListener("targetFound", () => {
+    audio2.play();
+  });
+  target2.addEventListener("targetLost", () => {
+    audio2.pause();
+    audio2.currentTime = 0;
+  });
+
+
+   // TARGET 3
+  target3.addEventListener("targetFound", () => {
+    audio3.play();
+  });
+  target3.addEventListener("targetLost", () => {
+    audio3.pause();
+    audio3.currentTime = 0;
+  });
+
+
+   // TARGET 4
+  target4.addEventListener("targetFound", () => {
+    audio4.play();
+  });
+  target4.addEventListener("targetLost", () => {
+    audio4.pause();
+    audio4.currentTime = 0;
+  });
+
+
+   // TARGET 5
+  target5.addEventListener("targetFound", () => {
+    audio5.play();
+  });
+  target5.addEventListener("targetLost", () => {
+    audio5.pause();
+    audio5.currentTime = 0;
+  });
+</script>
+  </body>
+</html>
