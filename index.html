@@ -72,11 +72,15 @@ document.querySelector("#startButton").addEventListener("click", async () => {
 
   try {
     mainAudio.muted = true;
-    mainAudio.src = audioFiles[0];
-    await mainAudio.play();
+
+    // play empty audio to unlock iOS
+    mainAudio.src = "";
+    await mainAudio.play().catch(()=>{});
+
     mainAudio.pause();
     mainAudio.currentTime = 0;
     mainAudio.muted = false;
+
   } catch(e) {
     console.log("audio unlock failed", e);
   }
@@ -120,6 +124,7 @@ setupTarget("#target5",5);
 
 </body>
 </html>
+
 
 
 
