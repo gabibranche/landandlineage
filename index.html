@@ -1,4 +1,5 @@
 
+
 <html>
   <head>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -55,15 +56,18 @@
   const audios = document.querySelectorAll("audio");
 
   audios.forEach(audio => {
+    audio.load();
+
     audio.play().then(() => {
       audio.pause();
       audio.currentTime = 0;
-    });
+    }).catch(()=>{});
   });
 
   document.querySelector("#startButton").style.display = "none";
 });
-  
+
+
   // AUDIO FILES
   const audio0 = document.querySelector("#audio0");
   const audio1 = document.querySelector("#audio1");
@@ -117,3 +121,7 @@
 
   </body>
 </html>
+
+  </body>
+</html>
+
