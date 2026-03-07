@@ -1,127 +1,124 @@
 
 
-
 <html>
-  <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/gh/donmccurdy/aframe-extras@v7.0.0/dist/aframe-extras.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.5/dist/mindar-image-aframe.prod.js"></script>
-  </head>
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
 
- 
+  <script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/donmccurdy/aframe-extras@v7.0.0/dist/aframe-extras.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.5/dist/mindar-image-aframe.prod.js"></script>
 
-  <body>
+  <style>
+    body { margin:0; }
 
-    <button id="startButton">Tap to Start AR</button>
+    #startButton{
+      position:fixed;
+      top:50%;
+      left:50%;
+      transform:translate(-50%,-50%);
+      padding:16px 24px;
+      font-size:18px;
+      z-index:10;
+    }
+  </style>
+</head>
 
-    <a-scene mindar-image="imageTargetSrc: https://raw.githubusercontent.com/gabibranche/landandlineage/main/women.mind;" color-space="sRGB" renderer="colorManagement: true, physicallyCorrectLights" vr-mode-ui="enabled: false" device-orientation-permission-ui="enabled: false">
-      
+<body>
 
-      <a-camera position="0 0 0" look-controls="enabled: false"></a-camera>
+<button id="startButton">Tap to Start AR</button>
 
+<a-scene
+  mindar-image="imageTargetSrc: https://raw.githubusercontent.com/gabibranche/landandlineage/main/women.mind;"
+  color-space="sRGB"
+  renderer="colorManagement: true, physicallyCorrectLights"
+  vr-mode-ui="enabled: false"
+  device-orientation-permission-ui="enabled: false"
+>
 
-  <a-assets>
-    <audio id="audio0" src="https://raw.githubusercontent.com/gabibranche/landandlineage/main/barbara.mp3" preload="auto"  playsinline></audio>
-    <audio id="audio1" src="https://raw.githubusercontent.com/gabibranche/landandlineage/main/gabi.mp3" preload="auto" playsinline></audio>
-    <audio id="audio2" src="https://raw.githubusercontent.com/gabibranche/landandlineage/main/julia.mp3" preload="auto" playsinline></audio>
-    <audio id="audio3" src="https://raw.githubusercontent.com/gabibranche/landandlineage/main/lisa.mp3" preload="auto" playsinline></audio>
-    <audio id="audio4" src="https://raw.githubusercontent.com/gabibranche/landandlineage/main/mary.mp3" preload="auto" playsinline></audio>
-    <audio id="audio5" src="https://raw.githubusercontent.com/gabibranche/landandlineage/main/ursula.mp3" preload="auto" playsinline></audio>
-  </a-assets>
+<a-camera position="0 0 0" look-controls="enabled: false"></a-camera>
 
+<a-assets>
+  <!-- Single audio element -->
+  <audio id="mainAudio" preload="auto" playsinline></audio>
+</a-assets>
 
-       <!-- TARGET 0 -->
-  <a-entity id="target0" mindar-image-target="targetIndex: 0"></a-entity>
-
-  <!-- TARGET 1 -->
-  <a-entity id="target1" mindar-image-target="targetIndex: 1"></a-entity>
-
-  <!-- TARGET 2 -->
-  <a-entity id="target2" mindar-image-target="targetIndex: 2"></a-entity>
-
-   <!-- TARGET 3 -->
-  <a-entity id="target3" mindar-image-target="targetIndex: 3"></a-entity>
-
-   <!-- TARGET 4 -->
-  <a-entity id="target4" mindar-image-target="targetIndex: 4"></a-entity>
-
-   <!-- TARGET 5 -->
-  <a-entity id="target5" mindar-image-target="targetIndex: 5"></a-entity>
+<!-- TARGETS -->
+<a-entity id="target0" mindar-image-target="targetIndex: 0"></a-entity>
+<a-entity id="target1" mindar-image-target="targetIndex: 1"></a-entity>
+<a-entity id="target2" mindar-image-target="targetIndex: 2"></a-entity>
+<a-entity id="target3" mindar-image-target="targetIndex: 3"></a-entity>
+<a-entity id="target4" mindar-image-target="targetIndex: 4"></a-entity>
+<a-entity id="target5" mindar-image-target="targetIndex: 5"></a-entity>
 
 </a-scene>
 
 <script>
-// START BUTTON (unlocks audio safely for iPhone)
-document.querySelector("#startButton").addEventListener("click", async () => {
-  const audios = document.querySelectorAll("audio");
 
-  for (let audio of audios) {
-    try {
-      audio.muted = true;
-      await audio.play();   // unlock audio
-      audio.pause();
-      audio.currentTime = 0;
-      audio.muted = false;
-    } catch(e) {
-      console.log("unlock failed", e);
-    }
+// AUDIO FILES
+const audioFiles = [
+  "https://raw.githubusercontent.com/gabibranche/landandlineage/main/barbara.mp3",
+  "https://raw.githubusercontent.com/gabibranche/landandlineage/main/gabi.mp3",
+  "https://raw.githubusercontent.com/gabibranche/landandlineage/main/julia.mp3",
+  "https://raw.githubusercontent.com/gabibranche/landandlineage/main/lisa.mp3",
+  "https://raw.githubusercontent.com/gabibranche/landandlineage/main/mary.mp3",
+  "https://raw.githubusercontent.com/gabibranche/landandlineage/main/ursula.mp3"
+];
+
+const mainAudio = document.querySelector("#mainAudio");
+
+
+// START BUTTON (required for iPhone audio unlock)
+document.querySelector("#startButton").addEventListener("click", async () => {
+
+  try {
+    mainAudio.muted = true;
+    mainAudio.src = audioFiles[0];
+    await mainAudio.play();
+    mainAudio.pause();
+    mainAudio.currentTime = 0;
+    mainAudio.muted = false;
+  } catch(e) {
+    console.log("audio unlock failed", e);
   }
 
   document.querySelector("#startButton").style.display = "none";
 });
 
 
-// AUDIO FILES
-const audio0 = document.querySelector("#audio0");
-const audio1 = document.querySelector("#audio1");
-const audio2 = document.querySelector("#audio2");
-const audio3 = document.querySelector("#audio3");
-const audio4 = document.querySelector("#audio4");
-const audio5 = document.querySelector("#audio5");
+// TARGET AUDIO FUNCTION
+function setupTarget(targetId, index){
 
-const target0 = document.querySelector("#target0");
-const target1 = document.querySelector("#target1");
-const target2 = document.querySelector("#target2");
-const target3 = document.querySelector("#target3");
-const target4 = document.querySelector("#target4");
-const target5 = document.querySelector("#target5");
-
-
-// HELPER: stop all audio
-function stopAllAudio() {
-  document.querySelectorAll("audio").forEach(a => {
-    a.pause();
-    a.currentTime = 0;
-  });
-}
-
-
-// TARGET AUDIO LOGIC
-function setupTarget(target, audio) {
+  const target = document.querySelector(targetId);
 
   target.addEventListener("targetFound", () => {
-    stopAllAudio();
-    audio.play().catch(e => console.log("Play blocked:", e));
+
+    mainAudio.pause();
+    mainAudio.currentTime = 0;
+
+    mainAudio.src = audioFiles[index];
+
+    mainAudio.play().catch(e => console.log("play blocked", e));
   });
 
   target.addEventListener("targetLost", () => {
-    audio.pause();
-    audio.currentTime = 0;
+    mainAudio.pause();
+    mainAudio.currentTime = 0;
   });
 
 }
 
 
 // CONNECT TARGETS
-setupTarget(target0, audio0);
-setupTarget(target1, audio1);
-setupTarget(target2, audio2);
-setupTarget(target3, audio3);
-setupTarget(target4, audio4);
-setupTarget(target5, audio5);
+setupTarget("#target0",0);
+setupTarget("#target1",1);
+setupTarget("#target2",2);
+setupTarget("#target3",3);
+setupTarget("#target4",4);
+setupTarget("#target5",5);
+
 </script>
 
-  </body>
+</body>
 </html>
+
 
