@@ -8,19 +8,40 @@
   <script src="https://cdn.jsdelivr.net/gh/donmccurdy/aframe-extras@v7.0.0/dist/aframe-extras.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.5/dist/mindar-image-aframe.prod.js"></script>
 
-  <style>
-    body { margin:0; }
+ <style>
+body{
+  margin:0;
+}
 
-    #startButton{
-      position:fixed;
-      top:50%;
-      left:50%;
-      transform:translate(-50%,-50%);
-      padding:16px 24px;
-      font-size:18px;
-      z-index:10;
-    }
-  </style>
+/* AR scene starts invisible */
+a-scene{
+  opacity:0;
+  transition:opacity 1.2s ease;
+}
+
+/* visible state */
+a-scene.visible{
+  opacity:1;
+}
+
+#startButton{
+  position:fixed;
+  top:50%;
+  left:50%;
+  transform:translate(-50%,-50%);
+  padding:16px 26px;
+  font-size:18px;
+  z-index:10;
+
+  transition:opacity 0.8s ease;
+}
+
+/* button fade out */
+#startButton.fade{
+  opacity:0;
+  pointer-events:none;
+}
+</style>
 </head>
 
 <body>
@@ -73,7 +94,6 @@ document.querySelector("#startButton").addEventListener("click", async () => {
   try {
     mainAudio.muted = true;
 
-    // play empty audio to unlock iOS
     mainAudio.src = "";
     await mainAudio.play().catch(()=>{});
 
@@ -85,7 +105,19 @@ document.querySelector("#startButton").addEventListener("click", async () => {
     console.log("audio unlock failed", e);
   }
 
-  document.querySelector("#startButton").style.display = "none";
+  // fade button out
+  const button = document.querySelector("#startButton");
+  button.classList.add("fade");
+
+  // fade AR scene in
+  const scene = document.querySelector("a-scene");
+  scene.classList.add("visible");
+
+  // remove button after animation
+  setTimeout(()=>{
+    button.remove();
+  },800);
+
 });
 
 
@@ -124,6 +156,7 @@ setupTarget("#target5",5);
 
 </body>
 </html>
+
 
 
 
